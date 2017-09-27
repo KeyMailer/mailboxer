@@ -24,6 +24,8 @@ module Mailboxer
   mattr_accessor :notification_mailer
   mattr_accessor :message_mailer
   mattr_accessor :custom_deliver_proc
+  @@indexable_metadata_fields = []
+  mattr_accessor :indexable_metadata_fields
 
   class << self
     def setup

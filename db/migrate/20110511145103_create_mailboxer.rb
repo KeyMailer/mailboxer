@@ -6,6 +6,7 @@ class CreateMailboxer < ActiveRecord::Migration[4.2]
       t.column :subject, :string, :default => ""
       t.column :created_at, :datetime, :null => false
       t.column :updated_at, :datetime, :null => false
+      t.column :metadata, :jsonb, :null => false, default: {}
     end
     #Receipts
     create_table :mailboxer_receipts do |t|
