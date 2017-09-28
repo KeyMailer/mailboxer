@@ -34,6 +34,7 @@ class CreateMailboxer < ActiveRecord::Migration[4.2]
       t.column :created_at, :datetime, :null => false
       t.boolean :global, default: false
       t.datetime :expires
+      t.jsonb :metadata, default: {}, null: false
     end
 
   #Indexes
