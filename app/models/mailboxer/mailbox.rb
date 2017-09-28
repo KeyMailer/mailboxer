@@ -43,7 +43,7 @@ class Mailboxer::Mailbox
 
     options.each do |k, v|
       if Mailboxer.indexable_metadata_fields.include? k
-        conv = conv.where("metadata->>'#{k}' = ?", v.to_s)
+        conv = conv.where("mailboxer_conversations.metadata->>'#{k}' = ?", v.to_s)
       end
     end
 
