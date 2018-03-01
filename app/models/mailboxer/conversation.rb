@@ -57,6 +57,16 @@ class Mailboxer::Conversation < ActiveRecord::Base
     .order(updated_at: :desc).distinct
   }
 
+  scope :with_metadata, lambda {|options|
+    ar = all
+    options.each do |k, v|
+      if Mailboxer.indexable_metadata_fields.include? k
+        ar = ar.where("mailboxer_conversations.metadata->>'#{k}' = ?", v.to_s)
+      end
+    end
+    ar
+  }
+
   #Mark the conversation as read for one of the participants
   def mark_as_read(participant)
     return unless participant

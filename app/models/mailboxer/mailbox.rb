@@ -41,13 +41,7 @@ class Mailboxer::Mailbox
       conv = conv.unread(messageable)
     end
 
-    options.each do |k, v|
-      if Mailboxer.indexable_metadata_fields.include? k
-        conv = conv.where("mailboxer_conversations.metadata->>'#{k}' = ?", v.to_s)
-      end
-    end
-
-    conv
+    conv.with_metadata(options)
   end
 
   #Returns the conversations in the inbox of messageable
