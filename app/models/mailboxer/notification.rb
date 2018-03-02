@@ -98,7 +98,7 @@ class Mailboxer::Notification < ActiveRecord::Base
   #Returns the recipients of the Notification
   def recipients
     return Array.wrap(@recipients) unless @recipients.blank?
-    recipients  = receipts.includes(:receiver).map(&:receiver)
+    recipients  = receipts.includes(:receiver).map(&:receiver).compact
     @recipients = Mailboxer::RecipientFilter.new(self, recipients).call
   end
 
