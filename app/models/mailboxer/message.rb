@@ -11,6 +11,17 @@ class Mailboxer::Message < Mailboxer::Notification
     where(:conversation_id => conversation.id)
   }
 
+  scope :with_metadata, lambda {|options|
+    ar = all
+    options.each do |k, v|
+      #if Mailboxer.indexable_metadata_fields.include? k
+        ar = ar.where("mailboxer_notifications.metadata->>'#{k}' = ?", v.to_s)
+      #end
+    end
+    ar
+  }
+
+
   mount_uploader :attachment, Mailboxer::AttachmentUploader
 
   class << self
