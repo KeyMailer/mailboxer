@@ -26,6 +26,11 @@ class Mailboxer::Conversation < ActiveRecord::Base
   scope :trash, lambda {|participant|
     participant(participant).merge(Mailboxer::Receipt.trash)
   }
+  scope :read,  lambda {|participant|
+    # clunky, but it works
+    ids = participant(participant).group('mailboxer_conversations.id').having("ARRAY_AGG(DISTINCT(is_read)) = ARRAY[true]").reorder(nil).pluck(:id)
+    where(id: ids).order(updated_at: :desc)
+  }
   scope :unread,  lambda {|participant|
     participant(participant).merge(Mailboxer::Receipt.is_unread)
   }
