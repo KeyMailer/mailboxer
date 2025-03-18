@@ -30,7 +30,7 @@ class Mailboxer::Conversation < ActiveRecord::Base
     # clunky, but it works
     where(id: participant(participant).
               group('mailboxer_conversations.id').
-              having("ARRAY_AGG(DISTINCT(is_read)) = ARRAY[true]").
+              having("ARRAY_AGG(DISTINCT(mailboxer_receipts.is_read)) = ARRAY[true]").
               reorder(nil).
               select(:id)
     ).order(updated_at: :desc)
